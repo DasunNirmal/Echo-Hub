@@ -11,13 +11,14 @@ public class ClientHandler implements Runnable {
     private Socket socket;
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
-    private ArrayList<ClientHandler> clientHandlersList;
+    private static ArrayList<DataOutputStream> clientOutputStreams;
 
-    public ClientHandler(Socket socket,ArrayList<ClientHandler> clientHandlersList) throws IOException {
+    public ClientHandler(Socket socket, ArrayList<DataOutputStream> clientOutputStreams) throws IOException {
         this.socket = socket;
-        this.clientHandlersList = clientHandlersList;
+        this.clientOutputStreams = clientOutputStreams;
         dataInputStream = new DataInputStream(socket.getInputStream());
         dataOutputStream = new DataOutputStream(socket.getOutputStream());
+        clientOutputStreams.add(dataOutputStream);
     }
 
     @Override
@@ -25,10 +26,7 @@ public class ClientHandler implements Runnable {
         try {
             while (true) {
                 String msg = dataInputStream.readUTF();
-                for (ClientHandler clientHandler : clientHandlersList) {
-                    clientHandler.dataOutputStream.writeUTF(msg);
-                    dataOutputStream.flush();
-                }
+                broadcastMessage(msg); // Broadcast the message to all clients
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -40,6 +38,13 @@ public class ClientHandler implements Runnable {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+        }
+    }
+
+    public static void broadcastMessage(String message) throws IOException {
+        for (DataOutputStream outputStream : clientOutputStreams) {
+            outputStream.writeUTF(message);
+            outputStream.flush();
         }
     }
 }

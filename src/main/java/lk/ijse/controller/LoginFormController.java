@@ -33,9 +33,8 @@ public class LoginFormController {
 
     RegistrationModel registrationModel = new RegistrationModel();
 
-    DataOutputStream dataOutputStream;
+    private static ArrayList<DataOutputStream> clientHandlersList = new ArrayList<>();
 
-    private static ArrayList<ClientHandler> clientHandlersList = new ArrayList<>();
 
     public void initialize() {
         startServer();
@@ -93,14 +92,15 @@ public class LoginFormController {
     private void startServer() {
         new Thread(() -> {
             try {
-                ServerSocket serverSocket = new ServerSocket(3003);
+                ServerSocket serverSocket = new ServerSocket(3001);
                 Socket socket;
                 while (true) {
                     System.out.println("Waiting for clients...");
                     socket = serverSocket.accept();
                     System.out.println("Accepted...");
                     ClientHandler clients = new ClientHandler(socket,clientHandlersList);
-                    clientHandlersList.add(clients);
+                    new Thread(clients).start();
+
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
