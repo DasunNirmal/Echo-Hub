@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="rootNode" prefHeight="711.0" prefWidth="479.0" style="-fx-background-color: #130f40;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.MessageFormController">
+   <children>
+      <TextField fx:id="txtMassageSend" layoutX="23.0" layoutY="625.0" onAction="#txtMessageSendOnAction" prefHeight="40.0" prefWidth="331.0" promptText="send a message....." style="-fx-background-radius: 25;">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </TextField>
+      <AnchorPane layoutX="368.0" layoutY="625.0" prefHeight="40.0" prefWidth="95.0" style="-fx-background-color: white; -fx-background-radius: 25;">
+         <children>
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/icons8-happy-100.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="32.0" fitWidth="40.0" layoutX="54.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/icons8-attachment-100.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <ImageView fitHeight="67.0" fitWidth="70.0" layoutX="13.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/icons8-user-100.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="40.0" fitWidth="46.0" layoutX="421.0" layoutY="25.0" onMouseClicked="#imgBackOnAction" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/icons8-logout-100.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <Label layoutX="83.0" layoutY="25.0" text="Hey" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblUserName" layoutX="83.0" layoutY="43.0" prefHeight="18.0" prefWidth="95.0" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblTime" layoutX="208.0" layoutY="11.0" prefHeight="18.0" prefWidth="95.0" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <ScrollPane layoutX="29.0" layoutY="85.0" prefHeight="529.0" prefWidth="418.0">
+         <content>
+            <VBox fx:id="vBox" prefWidth="413.0">
+               <children>
+                  <HBox prefHeight="75.0" prefWidth="413.0">
+                     <children>
+                        <Label prefHeight="32.0" prefWidth="127.0">
+                           <font>
+                              <Font name="System Bold Italic" size="14.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="72.0" prefWidth="413.0">
+                     <children>
+                        <Label alignment="CENTER_RIGHT" prefHeight="32.0" prefWidth="127.0">
+                           <font>
+                              <Font name="System Bold Italic" size="14.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

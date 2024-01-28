@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.CubicCurve?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="rootNode" prefHeight="711.0" prefWidth="479.0" style="-fx-background-color: #130f40;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.RegisterFormController">
+   <children>
+      <Circle fill="#22264db8" layoutX="-26.0" layoutY="59.0" radius="176.0" stroke="#130f40" strokeType="INSIDE" />
+      <CubicCurve controlX1="-118.0" controlX2="226.0" controlY1="-329.0" controlY2="-203.0" endX="248.0" endY="8.0" fill="#22264db7" layoutX="241.0" layoutY="713.0" startX="-231.0" startY="8.0" stroke="#130f40" />
+      <Label layoutX="119.0" layoutY="241.0" prefHeight="18.0" prefWidth="180.0" text="Enter Your User Name" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtUserName" alignment="CENTER" layoutX="109.0" layoutY="266.0" onAction="#txtGoToPhoneNumberOnAction" prefHeight="40.0" prefWidth="298.0" style="-fx-background-color: #FFA4A4; -fx-background-radius: 25;">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+         <font>
+            <Font name="System Bold Italic" size="13.0" />
+         </font>
+      </TextField>
+      <Label layoutX="119.0" layoutY="329.0" prefHeight="18.0" prefWidth="201.0" text="Enter Your Phone Number" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtPhoneNumber" alignment="CENTER" layoutX="109.0" layoutY="354.0" onAction="#txtGoToPwOnAction" prefHeight="40.0" prefWidth="298.0" style="-fx-background-color: #FFA4A4; -fx-background-radius: 25;">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+         <font>
+            <Font name="System Bold Italic" size="13.0" />
+         </font>
+      </TextField>
+      <PasswordField fx:id="txtPassword" alignment="CENTER" layoutX="107.0" layoutY="442.0" onAction="#txtGoToRegisterOnAction" prefHeight="40.0" prefWidth="298.0" style="-fx-background-color: #FFA4A4; -fx-background-radius: 25;">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </PasswordField>
+      <Label layoutX="119.0" layoutY="420.0" prefHeight="18.0" prefWidth="201.0" text="Create a Strong Password" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="13.0" />
+         </font>
+      </Label>
+      <JFXButton alignment="CENTER" buttonType="RAISED" layoutX="207.0" layoutY="545.0" onAction="#btnRegisterOnAction" prefHeight="30.0" prefWidth="101.0" style="-fx-background-color: #FFA4A4; -fx-background-radius: 20;" text="Register" textFill="#130f40">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <ImageView fitHeight="116.0" fitWidth="123.0" layoutX="183.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/message.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="34.0" fitWidth="36.0" layoutX="114.0" layoutY="268.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/icons8-user (1).gif" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="34.0" fitWidth="36.0" layoutX="116.0" layoutY="357.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/icons8-ringer-volume.gif" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="34.0" fitWidth="36.0" layoutX="116.0" layoutY="445.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/icons8-check-lock.gif" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="40.0" fitWidth="45.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#imgBackOnAction" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/icons8-back-arrow-100 (1).png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+   </children>
+</AnchorPane>
