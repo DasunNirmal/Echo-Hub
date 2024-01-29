@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ClientHandler implements Runnable {
 
@@ -26,7 +27,16 @@ public class ClientHandler implements Runnable {
         try {
             while (true) {
                 String msg = dataInputStream.readUTF();
-                broadcastMessage(msg); // Broadcast the message to all clients
+                if (msg.equals("TEXT")) {
+                    String allMsg = dataInputStream.readUTF();
+                    broadcastMessage(allMsg); // Broadcast the message to all clients
+                } else if (msg.equals("IMAGE")) {
+                    String img = dataInputStream.readUTF();
+                    int fileSize = dataInputStream.readInt();
+                    byte[] fileData = new byte[fileSize];
+                    dataInputStream.readFully(fileData);
+                    broadcastImage(fileData,img);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -35,6 +45,20 @@ public class ClientHandler implements Runnable {
                 socket.close();
                 dataInputStream.close();
                 dataOutputStream.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private void broadcastImage(byte[] fileData, String img) {
+        for (DataOutputStream clientOutputStream : clientOutputStreams) {
+            try {
+                clientOutputStream.writeUTF("IMAGE");
+                clientOutputStream.writeUTF(img);
+                clientOutputStream.writeInt(fileData.length);
+                clientOutputStream.write(fileData);
+                clientOutputStream.flush();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

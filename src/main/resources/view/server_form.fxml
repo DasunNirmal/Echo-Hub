@@ -24,7 +24,7 @@
                   <Image url="@../icons/icons8-happy-100.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="32.0" fitWidth="40.0" layoutX="54.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="32.0" fitWidth="40.0" layoutX="54.0" layoutY="4.0" onMouseClicked="#imgSendImagesOnAction" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../icons/icons8-attachment-100.png" />
                </image>
