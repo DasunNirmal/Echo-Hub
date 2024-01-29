@@ -6,10 +6,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -19,7 +16,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import lk.ijse.dto.RegisterDto;
 
@@ -53,7 +49,7 @@ public class MessageFormController {
 
     private DataOutputStream dataOutputStream;
 
-    String updated = "";
+    String mag_updated = "";
 
 
     public void initialize() {
@@ -77,7 +73,7 @@ public class MessageFormController {
                         String message = dataInputStream.readUTF();
 
                         Platform.runLater(() -> {
-                            if (updated.equals("done")) {
+                            if (mag_updated.equals("done")) {
                                 Label label = new Label(message);
 
                                 label.setStyle("-fx-font-size: 20px; -fx-padding: 20px;");
@@ -87,7 +83,7 @@ public class MessageFormController {
                                 borderPane.setRight(label);
                                 vBox.getChildren().add(borderPane);
 
-                                updated = "";
+                                mag_updated = "";
                             }else {
                                 Label label = new Label(message);
 
@@ -117,7 +113,7 @@ public class MessageFormController {
                                 Image image = new Image(byteArrayInputStream);
                                 imageView.setImage(image);
 
-                                if (updated.equals("done")) {
+                                if (mag_updated.equals("done")) {
                                     Label label = new Label(message);
                                     label.setStyle("-fx-font-size: 20px; -fx-padding: 20px;");
                                     label.setBackground(new Background(new BackgroundFill(Color.web("#25D366"), new CornerRadii(10), new Insets(10))));
@@ -128,7 +124,7 @@ public class MessageFormController {
                                     borderPane.setRight(imageView);
                                     vBox.getChildren().add(borderPane1);
                                     vBox.getChildren().add(borderPane);
-                                    updated = "";
+                                    mag_updated = "";
                                 } else {
                                     Label label = new Label(message);
                                     label.setStyle("-fx-font-size: 20px; -fx-padding: 20px;");
@@ -160,13 +156,13 @@ public class MessageFormController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        updated = "done";
+        mag_updated = "done";
     }
 
     @FXML
     void imgSendImagesOnAction(MouseEvent event) {
         String sender = lblUserName.getText();
-        updated = "done";
+        mag_updated = "done";
         Platform.runLater(() -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG Files", "*.png"),

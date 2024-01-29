@@ -28,13 +28,17 @@ public class ClientHandler implements Runnable {
                 String msg = dataInputStream.readUTF();
                 if (msg.equals("TEXT")) {
                     String allMsg = dataInputStream.readUTF();
-                    broadcastMessage(allMsg); // Broadcast the message to all clients
+                    if (allMsg != null) {
+                        broadcastMessage(allMsg); // Broadcast the message to all clients
+                    }
                 } else if (msg.equals("IMAGE")) {
                     String img = dataInputStream.readUTF();
                     int fileSize = dataInputStream.readInt();
                     byte[] fileData = new byte[fileSize];
                     dataInputStream.readFully(fileData);
-                    broadcastImage(fileData,img);
+                    if (fileData != null) {
+                        broadcastImage(fileData,img);
+                    }
                 }
             }
         } catch (IOException e) {
@@ -66,8 +70,13 @@ public class ClientHandler implements Runnable {
 
     public static void broadcastMessage(String message) throws IOException {
         for (DataOutputStream outputStream : clientOutputStreams) {
-            outputStream.writeUTF(message);
-            outputStream.flush();
+            try {
+                outputStream.writeUTF("TEXT");
+                outputStream.writeUTF(message);
+                outputStream.flush();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
