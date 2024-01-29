@@ -77,16 +77,21 @@ public class MessageFormController {
                         Platform.runLater(() -> {
                             if (updated.equals("done")) {
                                 Label label = new Label(message);
+
                                 label.setStyle("-fx-font-size: 20px; -fx-padding: 20px;");
                                 label.setBackground(new Background(new BackgroundFill(Color.BEIGE, new CornerRadii(10), new Insets(10))));
+
                                 BorderPane borderPane = new BorderPane();
                                 borderPane.setRight(label);
                                 vBox.getChildren().add(borderPane);
+
                                 updated = "";
                             }else {
                                 Label label = new Label(message);
+
                                 label.setStyle("-fx-font-size: 20px; -fx-padding: 20px;");
                                 label.setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(10), new Insets(10))));
+
                                 vBox.getChildren().add(label);
                             }
                         });
