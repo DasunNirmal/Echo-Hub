@@ -7,16 +7,15 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import lk.ijse.dto.RegisterDto;
@@ -27,7 +26,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 
 
 public class MessageFormController {
@@ -49,15 +47,14 @@ public class MessageFormController {
     @FXML
     private VBox vBox;
 
-    private Socket socket;
-
     private DataInputStream dataInputStream;
 
     private DataOutputStream dataOutputStream;
 
-    String message = "";
+    String updated = "";
 
-    public void initialize() throws IOException {
+
+    public void initialize() {
         setDateAndTime();
 
         FadeTransition fadeIn = new FadeTransition(Duration.millis(1000), rootNode);
@@ -72,10 +69,28 @@ public class MessageFormController {
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
                 while (true) {
-                    String message = dataInputStream.readUTF();
-                    Platform.runLater(() -> {
-                        displayMessage(message);
-                    });
+                    String messageTyp = dataInputStream.readUTF();
+
+                    if (messageTyp.equals("TEXT")) {
+                        String message = dataInputStream.readUTF();
+
+                        Platform.runLater(() -> {
+                            if (updated.equals("done")) {
+                                Label label = new Label(message);
+                                label.setStyle("-fx-font-size: 20px; -fx-padding: 20px;");
+                                label.setBackground(new Background(new BackgroundFill(Color.BEIGE, new CornerRadii(10), new Insets(10))));
+                                BorderPane borderPane = new BorderPane();
+                                borderPane.setRight(label);
+                                vBox.getChildren().add(borderPane);
+                                updated = "";
+                            }else {
+                                Label label = new Label(message);
+                                label.setStyle("-fx-font-size: 20px; -fx-padding: 20px;");
+                                label.setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(10), new Insets(10))));
+                                vBox.getChildren().add(label);
+                            }
+                        });
+                    }
                 }
             } catch (IOException e) {
                 new Alert(Alert.AlertType.INFORMATION, "Connection Closed").show();
@@ -83,13 +98,19 @@ public class MessageFormController {
         }).start();
     }
 
-    private void displayMessage(String message) {
-        HBox hBox = new HBox();
-        hBox.setStyle("-fx-alignment: center-right;-fx-fill-height: true;-fx-min-height: 50;-fx-pref-width: 520;-fx-max-width: 520;-fx-padding: 10");
-        Label messageLbl = new Label(message);
-        messageLbl.setStyle("-fx-background-color:  #27ae60;-fx-background-radius:15;-fx-font-size: 16;-fx-font-weight: normal;-fx-text-fill: white;-fx-wrap-text: true;-fx-alignment: center-left;-fx-content-display: left;-fx-padding: 10;-fx-max-width: 350;");
-        hBox.getChildren().add(messageLbl);
-        vBox.getChildren().add(hBox);
+    @FXML
+    void txtMessageSendOnAction(ActionEvent event) {
+        String sender = lblUserName.getText();
+        String message = txtMassageSend.getText().trim(); // Trim to remove leading/trailing spaces
+
+        try {
+            dataOutputStream.writeUTF("TEXT");
+            dataOutputStream.writeUTF(sender +"\n"+message);
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        updated = "done";
     }
 
     public void setUser(RegisterDto registerDto) {
@@ -113,20 +134,6 @@ public class MessageFormController {
         stage.setTitle("Login");
         stage.setResizable(false);
         stage.centerOnScreen();
-    }
-
-    @FXML
-    void txtMessageSendOnAction(ActionEvent event) throws IOException {
-        String message = txtMassageSend.getText().trim(); // Trim to remove leading/trailing spaces
-
-        if (!message.isEmpty()) {
-            dataOutputStream.writeUTF(message);
-            dataOutputStream.flush(); // Ensure the message is sent immediately
-
-
-            // Clear the text field after sending the message
-            txtMassageSend.clear();
-        }
     }
 
     private void setDateAndTime(){
