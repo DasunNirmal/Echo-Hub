@@ -112,7 +112,7 @@ public class MessageFormController {
                             if (mag_updated.equals("done")) {
                                 Label label = new Label(message);
 
-                                label.setStyle("-fx-font-size: 15px; -fx-padding: 15px;");
+                                label.setStyle("-fx-font-size: 15px; -fx-padding: 15px;-fx-font-weight: bold;");
                                 label.setBackground(new Background(
                                         new BackgroundFill(Color.rgb(255, 164, 164), new CornerRadii(10), new Insets(10))));
 
