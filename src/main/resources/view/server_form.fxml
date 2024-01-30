@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -7,24 +8,31 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="rootNode" prefHeight="711.0" prefWidth="479.0" style="-fx-background-color: #130f40;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.controller.MessageFormController">
    <children>
-      <TextField fx:id="txtMassageSend" layoutX="23.0" layoutY="625.0" onAction="#txtMessageSendOnAction" prefHeight="40.0" prefWidth="331.0" promptText="send a message....." style="-fx-background-radius: 25;">
+      <TextField fx:id="txtMassageSend" layoutX="23.0" layoutY="625.0" onAction="#txtMessageSendOnAction" prefHeight="40.0" prefWidth="307.0" promptText="send a message....." style="-fx-background-radius: 25;">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
       </TextField>
-      <AnchorPane layoutX="368.0" layoutY="625.0" prefHeight="40.0" prefWidth="95.0" style="-fx-background-color: white; -fx-background-radius: 25;">
+      <AnchorPane layoutX="340.0" layoutY="625.0" prefHeight="43.0" prefWidth="112.0" style="-fx-background-color: white; -fx-background-radius: 25;">
          <children>
-            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="4.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../icons/icons8-happy-100.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="32.0" fitWidth="40.0" layoutX="54.0" layoutY="4.0" onMouseClicked="#imgSendImagesOnAction" pickOnBounds="true" preserveRatio="true">
+            <JFXButton buttonType="RAISED" layoutX="6.0" layoutY="3.0" onAction="#btnSendEmojiOnAction" prefHeight="32.0" prefWidth="32.0" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/icons8-happy-100.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <ImageView fitHeight="32.0" fitWidth="40.0" layoutX="66.0" layoutY="5.0" onMouseClicked="#imgSendImagesOnAction" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../icons/icons8-attachment-100.png" />
                </image>
@@ -64,5 +72,24 @@
             <VBox fx:id="vBox" prefWidth="413.0" />
          </content>
       </ScrollPane>
+      <AnchorPane fx:id="emojiAnchorpane" layoutX="139.0" layoutY="399.0" prefHeight="216.0" prefWidth="307.0">
+         <children>
+            <GridPane fx:id="emojiGridpane" layoutY="5.0" prefHeight="194.0" prefWidth="307.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

@@ -1,5 +1,6 @@
 package lk.ijse.controller;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -45,11 +46,43 @@ public class MessageFormController {
     @FXML
     private VBox vBox;
 
+    @FXML
+    private AnchorPane emojiAnchorpane;
+
+    @FXML
+    private GridPane emojiGridpane;
+
+    @FXML
+    private ImageView imgEmoji;
+
     private DataInputStream dataInputStream;
 
     private DataOutputStream dataOutputStream;
 
     String mag_updated = "";
+
+    private final String[] emojis = {
+            "\uD83D\uDE00", // 😀
+            "\uD83D\uDE01", // 😁
+            "\uD83D\uDE02", // 😂
+            "\uD83D\uDE03", // 🤣
+            "\uD83D\uDE04", // 😄
+            "\uD83D\uDE05", // 😅
+            "\uD83D\uDE06", // 😆
+            "\uD83D\uDE07", // 😇
+            "\uD83D\uDE08", // 😈
+            "\uD83D\uDE09", // 😉
+            "\uD83D\uDE0A", // 😊
+            "\uD83D\uDE0B", // 😋
+            "\uD83D\uDE0C", // 😌
+            "\uD83D\uDE0D", // 😍
+            "\uD83D\uDE0E", // 😎
+            "\uD83D\uDE0F", // 😏
+            "\uD83D\uDE10", // 😐
+            "\uD83D\uDE11", // 😑
+            "\uD83D\uDE12", // 😒
+            "\uD83D\uDE13"  // 😓
+    };
 
 
     public void initialize() {
@@ -60,6 +93,8 @@ public class MessageFormController {
         fadeIn.setToValue(1.0);
         fadeIn.play();
 
+        sendEmojis();
+
         new Thread(() -> {
             try {
                 Socket socket = new Socket("localhost", 3001);
@@ -69,6 +104,7 @@ public class MessageFormController {
                 while (true) {
                     String messageTyp = dataInputStream.readUTF();
 
+//                  SEND TEXT MSG
                     if (messageTyp.equals("TEXT")) {
                         String message = dataInputStream.readUTF();
 
@@ -76,8 +112,9 @@ public class MessageFormController {
                             if (mag_updated.equals("done")) {
                                 Label label = new Label(message);
 
-                                label.setStyle("-fx-font-size: 20px; -fx-padding: 20px;");
-                                label.setBackground(new Background(new BackgroundFill(Color.BEIGE, new CornerRadii(10), new Insets(10))));
+                                label.setStyle("-fx-font-size: 15px; -fx-padding: 15px;");
+                                label.setBackground(new Background(
+                                        new BackgroundFill(Color.rgb(255, 164, 164), new CornerRadii(10), new Insets(10))));
 
                                 BorderPane borderPane = new BorderPane();
                                 borderPane.setRight(label);
@@ -87,8 +124,9 @@ public class MessageFormController {
                             }else {
                                 Label label = new Label(message);
 
-                                label.setStyle("-fx-font-size: 20px; -fx-padding: 20px;");
-                                label.setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(10), new Insets(10))));
+                                label.setStyle("-fx-font-size: 15px; -fx-padding: 15px;-fx-font-weight: bold;");
+                                label.setBackground(new Background(
+                                        new BackgroundFill(Color.WHITE, new CornerRadii(10), new Insets(10))));
 
                                 vBox.getChildren().add(label);
                             }
@@ -116,7 +154,7 @@ public class MessageFormController {
                                 if (mag_updated.equals("done")) {
                                     Label label = new Label(message);
                                     label.setStyle("-fx-font-size: 20px; -fx-padding: 20px;");
-                                    label.setBackground(new Background(new BackgroundFill(Color.web("#25D366"), new CornerRadii(10), new Insets(10))));
+                                    label.setBackground(new Background(new BackgroundFill(Color.rgb(255, 164, 164), new CornerRadii(10), new Insets(10))));
                                     BorderPane borderPane1 = new BorderPane();
                                     borderPane1.setRight(label);
 
@@ -144,6 +182,39 @@ public class MessageFormController {
         }).start();
     }
 
+    private void sendEmojis() {
+        emojiAnchorpane.setVisible(false);
+        int imageViewIndex = 0;
+        for (int i = 0; i < 4; i++) { // rows
+            for (int j = 0; j < 4; j++) { // columns
+                if (imageViewIndex < emojis.length) {
+                    String emoji = emojis[imageViewIndex];
+                    JFXButton emojiButton = createEmojiButton(emoji);
+                    emojiGridpane.add(emojiButton,j,i);
+                    imageViewIndex++;
+                } else {
+                    break;
+                }
+            }
+        }
+    }
+
+    private JFXButton createEmojiButton(String emoji) {
+        JFXButton button = new JFXButton(emoji);
+        button.getStyleClass().add("emoji-button");
+        button.setOnAction(this::emojiButtonAction);
+        button.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        GridPane.setFillWidth(button, true);
+        GridPane.setFillHeight(button, true);
+        button.setStyle("-fx-font-size: 15; -fx-text-fill: black; -fx-background-color: #F0F0F0; -fx-border-radius: 50");
+        return button;
+    }
+
+    private void emojiButtonAction(ActionEvent actionEvent) {
+        JFXButton button = (JFXButton) actionEvent.getSource();
+        txtMassageSend.appendText(button.getText());
+    }
+
     @FXML
     void txtMessageSendOnAction(ActionEvent event) {
         String sender = lblUserName.getText();
@@ -151,7 +222,7 @@ public class MessageFormController {
 
         try {
             dataOutputStream.writeUTF("TEXT");
-            dataOutputStream.writeUTF(sender +"\n"+message);
+            dataOutputStream.writeUTF(sender+":" +"\n"+ message);
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -188,6 +259,11 @@ public class MessageFormController {
                 }
             }
         });
+    }
+
+    @FXML
+    void btnSendEmojiOnAction(ActionEvent event) {
+        emojiAnchorpane.setVisible(!emojiAnchorpane.isVisible());
     }
 
     public void setUser(RegisterDto registerDto) {
