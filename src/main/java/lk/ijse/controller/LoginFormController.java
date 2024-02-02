@@ -36,10 +36,6 @@ public class LoginFormController {
     private static ArrayList<DataOutputStream> clientHandlersList = new ArrayList<>();
 
 
-    public void initialize() {
-//        startServer();
-    }
-
     @FXML
     void btnLoginOnAction(ActionEvent event) {
         String name = txtUserName.getText();
