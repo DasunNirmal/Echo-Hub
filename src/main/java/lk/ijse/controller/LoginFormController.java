@@ -37,7 +37,7 @@ public class LoginFormController {
 
 
     public void initialize() {
-        startServer();
+//        startServer();
     }
 
     @FXML
@@ -89,7 +89,7 @@ public class LoginFormController {
         }
     }
 
-    private void startServer() {
+    public static void startServer() {
         new Thread(() -> {
             try {
                 ServerSocket serverSocket = new ServerSocket(3001);

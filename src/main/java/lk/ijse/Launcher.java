@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import lk.ijse.controller.LoginFormController;
 
 public class Launcher extends Application {
     public static void main(String[] args) {
@@ -17,5 +18,6 @@ public class Launcher extends Application {
         stage.centerOnScreen();
         stage.setTitle("Login to Echo Hub");
         stage.show();
+        LoginFormController.startServer();
     }
 }
